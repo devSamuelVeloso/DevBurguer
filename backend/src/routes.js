@@ -1,21 +1,17 @@
 import { Router } from "express";
-import { v4 } from "uuid";
-import User from "./app/models/User.js";
+import multer from "multer";
+import ProductsController from "./app/controller/ProductsController.js";
+import SessionController from "./app/controller/SessionController.js";
+import UserController from "./app/controller/UserController.js";
+import multerConfig from "./config/multer.cjs";
 
 const routes = new Router();
 
-routes.post("/", async (_req, res)=> {
-    await User.create({
-        id: v4(),
-        name: "Samuel",
-        email: "snsjhdudb@gmail.com",
-        password_hash: "231231231",
-        admin: true
-    })
+const upload = multer(multerConfig);
 
-    res.status(201).json({
-        ok: "ok"
-    })
-})
+routes.post("/register", UserController.store);
+routes.post("/login", SessionController.store);
+routes.post("/products", upload.single("file"), ProductsController.store);
+routes.get("/products", ProductsController.index)
 
-export default routes
+export default routes;
