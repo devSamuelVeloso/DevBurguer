@@ -36,9 +36,10 @@ class ProductsController {
     return res.status(201).json({ newProduct });
   }
 
-  async index(_req, res) {
+  async index(req, res) {
     const products = await Product.findAll()
 
+    console.log(req.userId)
     return res.status(200).json({products})
   }
 }

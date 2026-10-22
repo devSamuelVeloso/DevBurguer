@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const auth = {
+const authConfig = {
     expiresIn: '7d',
     secret: process.env.JWT_SECRET
 }
 
-export default auth
+export default authConfig
