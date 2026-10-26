@@ -7,16 +7,24 @@ class Product extends Model {
         name: Sequelize.STRING,
         price: Sequelize.DECIMAL,
         path: Sequelize.STRING,
-        category: Sequelize.STRING,
         url: {
-            type: Sequelize.VIRTUAL,
-            get(){
-                return `http://localhost:3000/products-file/${this.path}`
-            }
-        }
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `http://localhost:3000/products-file/${this.path}`;
+          },
+        },
       },
       { sequelize, tableName: "products" },
     );
+
+    return this
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Category, {
+      foreignKey: 'category_id',
+      as: 'category'
+    });
   }
 }
 
