@@ -5,7 +5,7 @@ import routes from "./routes.js";
 const app = express();
 
 app.use(express.json());
-app.use('/products-file', fileRouteConfig)
+app.use("/products-file", fileRouteConfig);
 
 app.use(routes);
 

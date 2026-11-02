@@ -11,9 +11,7 @@ class CategoryController {
       schema.validateSync(req.body, { abortEarly: false, strict: false });
 
       if (!req.body.name) {
-        return res
-          .status(400)
-          .json({ error: "O nome é obrigatorio" });
+        return res.status(400).json({ error: "O nome é obrigatorio" });
       }
     } catch (err) {
       return res.status(400).json({
@@ -24,11 +22,11 @@ class CategoryController {
     const { name } = req.body;
 
     const existCategory = await Category.findOne({
-      where: { name }
-    })
+      where: { name },
+    });
 
-    if (existCategory){
-      return res.status(400).json({ error: 'Essa categoria ja existe' })
+    if (existCategory) {
+      return res.status(400).json({ error: "Essa categoria ja existe" });
     }
 
     const newProduct = await Category.create({

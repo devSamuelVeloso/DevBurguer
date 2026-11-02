@@ -1,11 +1,11 @@
 import { Router } from "express";
 import multer from "multer";
+import CategoryController from "./app/controller/CategoryController.js";
 import ProductsController from "./app/controller/ProductsController.js";
 import SessionController from "./app/controller/SessionController.js";
 import UserController from "./app/controller/UserController.js";
 import multerConfig from "./config/multer.cjs";
 import authMiddleware from "./middlewares/auth.js";
-import CategoryController from "./app/controller/CategoryController.js";
 
 const routes = new Router();
 

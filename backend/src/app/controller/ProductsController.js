@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import Product from "../models/Product.js";
 import Category from "../models/Category.js";
+import Product from "../models/Product.js";
 
 class ProductsController {
   async store(req, res) {
@@ -12,7 +12,7 @@ class ProductsController {
       });
 
       schema.validateSync(req.body, { abortEarly: false, strict: false });
-      
+
       if (!req.file) {
         return res
           .status(400)
@@ -41,12 +41,12 @@ class ProductsController {
     const products = await Product.findAll({
       include: {
         model: Category,
-        as: 'category',
-      }
-    })
+        as: "category",
+      },
+    });
 
-    console.log(req.userId)
-    return res.status(200).json({products})
+    console.log(req.userId);
+    return res.status(200).json({ products });
   }
 }
 

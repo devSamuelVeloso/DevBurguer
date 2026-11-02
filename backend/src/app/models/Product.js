@@ -17,13 +17,13 @@ class Product extends Model {
       { sequelize, tableName: "products" },
     );
 
-    return this
+    return this;
   }
 
   static associate(models) {
     this.belongsTo(models.Category, {
-      foreignKey: 'category_id',
-      as: 'category'
+      foreignKey: "category_id",
+      as: "category",
     });
   }
 }
