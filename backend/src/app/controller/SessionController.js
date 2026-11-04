@@ -20,7 +20,7 @@ class SessionController {
     }
 
     if (!isValid) {
-      emailOrpasswordInconrrect();
+      return emailOrpasswordInconrrect();
     }
 
     const { email, password } = req.body;
@@ -32,7 +32,7 @@ class SessionController {
     });
 
     if (!existingUser) {
-      emailOrpasswordInconrrect();
+      return emailOrpasswordInconrrect();
     }
 
     const isValidPassword = await bcrypt.compare(
@@ -41,12 +41,15 @@ class SessionController {
     );
 
     if (!isValidPassword) {
-      emailOrpasswordInconrrect();
+      return emailOrpasswordInconrrect();
     }
-
-    const token = jwt.sign({ id: existingUser.id }, auth.secret, {
-      expiresIn: auth.expiresIn,
-    });
+    const token = jwt.sign(
+      { id: existingUser.id, admin: existingUser.admin },
+      auth.secret,
+      {
+        expiresIn: auth.expiresIn,
+      },
+    );
 
     return res.status(200).json({
       id: existingUser.id,

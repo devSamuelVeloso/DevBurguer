@@ -5,6 +5,7 @@ import ProductsController from "./app/controller/ProductsController.js";
 import SessionController from "./app/controller/SessionController.js";
 import UserController from "./app/controller/UserController.js";
 import multerConfig from "./config/multer.cjs";
+import adminMiddleware from "./middlewares/admin.js";
 import authMiddleware from "./middlewares/auth.js";
 
 const routes = new Router();
@@ -14,9 +15,10 @@ const upload = multer(multerConfig);
 routes.post("/register", UserController.store);
 routes.post("/login", SessionController.store);
 routes.use(authMiddleware);
-routes.post("/products", upload.single("file"), ProductsController.store);
+routes.post("/products", adminMiddleware, upload.single("file"),ProductsController.store,);
+routes.put("/products/:id", adminMiddleware, upload.single("file"),ProductsController.update,);
 routes.get("/products", ProductsController.index);
-routes.post("/categories", CategoryController.store);
+routes.post("/categories", adminMiddleware, CategoryController.store);
 routes.get("/categories", CategoryController.index);
 
 export default routes;

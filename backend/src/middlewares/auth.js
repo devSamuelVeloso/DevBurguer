@@ -11,19 +11,24 @@ const authMiddleware = (req, res, next) => {
   }
 
   const token = authToken.split(" ")[1];
+
+  
   try {
     jwt.verify(token, authConfig.secret, (error, decoded) => {
-      console.log(decoded);
       if (error) {
-        throw Error();
+        return res.status(401).json({
+          error: "Token is invalid",
+        });
       }
-
+      console.log(decoded);
       req.userId = decoded.id;
+      req.userIsAdmin = decoded.admin;
+      return next();
     });
-  } catch (err) {
-    return res.status(401).json({ err: "Token is invalid" });
+  } catch (_error) {
+    console.error(_error);
+    return res.status(401).json({ error: "Token is invalid" });
   }
-  return next();
 };
 
 export default authMiddleware;

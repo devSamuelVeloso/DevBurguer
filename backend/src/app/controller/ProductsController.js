@@ -9,6 +9,7 @@ class ProductsController {
         name: Yup.string().required(),
         price: Yup.number().required(),
         category_id: Yup.number().required(),
+        offer: Yup.boolean(),
       });
 
       schema.validateSync(req.body, { abortEarly: false, strict: false });
@@ -24,7 +25,7 @@ class ProductsController {
       });
     }
 
-    const { name, price, category_id } = req.body;
+    const { name, price, category_id, offer } = req.body;
     const { filename: path } = req.file;
 
     const newProduct = await Product.create({
@@ -32,9 +33,49 @@ class ProductsController {
       price,
       category_id,
       path,
+      offer,
     });
 
     return res.status(201).json({ newProduct });
+  }
+
+  async update(req, res) {
+    try {
+      const schema = Yup.object({
+        name: Yup.string(),
+        price: Yup.number(),
+        category_id: Yup.number(),
+        offer: Yup.boolean(),
+      });
+
+      schema.validateSync(req.body, { abortEarly: false, strict: false });
+
+    } catch (err) {
+      return res.status(400).json({
+        error: err.errors,
+      });
+    }
+
+    const { name, price, category_id, offer } = req.body;
+    const { id } = req.params
+    let path
+
+    if (req.file) {
+      const { filename: path } = req.file;
+      pathConfig = req.file;
+    }
+
+    const updatedProduct = await Product.update({
+      name,
+      price,
+      category_id,
+      path,
+      offer,
+    },
+    { where: {id: req.params.id}}
+  );
+
+    return res.status(201);
   }
 
   async index(req, res) {

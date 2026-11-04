@@ -19,7 +19,6 @@ class UserController {
     }
 
     const { name, email, password, admin } = req.body;
-
     const existingUser = await User.findOne({
       where: { email },
     });
