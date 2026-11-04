@@ -21,6 +21,8 @@ class CategoryController {
 
     const { name } = req.body;
 
+    const { filename } = req.file;
+
     const existCategory = await Category.findOne({
       where: { name },
     });
@@ -31,6 +33,7 @@ class CategoryController {
 
     const newProduct = await Category.create({
       name,
+      path: filename,
     });
 
     return res.status(201).json({ newProduct });
