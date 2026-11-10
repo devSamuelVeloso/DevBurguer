@@ -49,7 +49,6 @@ class ProductsController {
       });
 
       schema.validateSync(req.body, { abortEarly: false, strict: false });
-
     } catch (err) {
       return res.status(400).json({
         error: err.errors,
@@ -57,28 +56,26 @@ class ProductsController {
     }
 
     const { name, price, category_id, offer } = req.body;
-    const { id } = req.params
-    let path
-
+    let path;
     if (req.file) {
-      const { filename: path } = req.file;
-      pathConfig = req.file;
+      path = req.file.filename;
     }
 
-    const updatedProduct = await Product.update({
-      name,
-      price,
-      category_id,
-      path,
-      offer,
-    },
-    { where: {id: req.params.id}}
-  );
+    const _updatedProduct = await Product.update(
+      {
+        name,
+        price,
+        category_id,
+        path,
+        offer,
+      },
+      { where: { id: req.params.id } },
+    );
 
-    return res.status(201);
+    return res.status(201).json();
   }
 
-  async index(req, res) {
+  async index(_req, res) {
     const products = await Product.findAll({
       include: {
         model: Category,
@@ -86,7 +83,6 @@ class ProductsController {
       },
     });
 
-    console.log(req.userId);
     return res.status(200).json({ products });
   }
 }
