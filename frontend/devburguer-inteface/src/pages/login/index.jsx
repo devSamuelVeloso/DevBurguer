@@ -4,6 +4,8 @@ import { Button } from '../../components/Button/index.jsx';
 import * as Yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { api } from '../../services/api.js'
+import { toast } from 'react-toastify'
 
 function Login() {
 
@@ -27,8 +29,18 @@ function Login() {
     reValidateMode: 'onSubmit'
   })
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async (data) => {
+    const response = await toast.promise(api.post('/sessions', {
+      email: data.email,
+      password: data.password
+    }),
+      {
+        pending: 'Verificando seus dados...',
+        success: 'Seja bem-vindo 🎉',
+        error: 'Email ou senha incorretos ❌'
+      }
+    )
+    console.log(response)
   }
 
   return (
