@@ -26,7 +26,7 @@ class UserController {
     const password_hash = await bcrypt.hash(password, 10);
 
     if (existingUser) {
-      return res.status(400).json({ message: "Email already taken" });
+      return res.status(409).json({ message: "Email already taken" });
     }
 
     const user = await User.create({
@@ -34,7 +34,7 @@ class UserController {
       name,
       email,
       password_hash,
-      admin,
+      admin: false,
     });
 
     return res.status(201).json({ user });
