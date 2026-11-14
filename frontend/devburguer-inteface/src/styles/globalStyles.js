@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
   }
 
+  body {
+    overflow-x: hidden; /* Impede qualquer scroll horizontal indesejado */
+  }
+
   button, a, img, svg {
     user-select: none;
   }

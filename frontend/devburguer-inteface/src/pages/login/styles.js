@@ -5,7 +5,7 @@ import BackgroundLogin2 from '../../assets/Background2-login.png';
 export const Container = styled.div`
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 `;
 
 export const LeftContainer = styled.div`
@@ -13,7 +13,7 @@ export const LeftContainer = styled.div`
   background-size: cover;
   background-position: center;
   height: 100%;
-  width: 100%;
+  width: 100vw;
   max-width: 50%;
   display: flex;
   align-items: center;
